@@ -1,10 +1,29 @@
 from __future__ import annotations
 
-from pprint import pprint
+from dataclasses import dataclass, field
+from pprint import pformat, pprint
 from typing import Callable, List, Tuple
 
 # 타입 힌트
 Array2d = List[List[int]]
+
+
+@dataclass
+class Matrix:
+    """
+    N x N matrix
+    """
+
+    data: Array2d
+    dim: int = field(init=False)
+
+    def __post_init__(self):
+        self.dim = len(self.data)
+        assert self.dim > 0
+
+    def __str__(self):
+        longest_row_len = max([len(f"[{row},") for row in self.data])
+        return pformat(self.data, width=longest_row_len)
 
 
 def create_array2d(dimension: int) -> Array2d:
@@ -30,10 +49,7 @@ def strassen(A: Array2d, B: Array2d) -> Array2d:
 def divide(A) -> Tuple[Array2d, Array2d, Array2d, Array2d]:
     n = len(A)
     m = n // 2
-    A11 = create_array2d(m)
-    A12 = create_array2d(m)
-    A21 = create_array2d(m)
-    A22 = create_array2d(m)
+    A11, A12, A21, A22 = [create_array2d(m) for _ in range(4)]
     for i in range(m):
         for j in range(m):
             A11[i][j] = A[i][j]
@@ -106,6 +122,13 @@ threshold = 2
 print(f"{threshold =}")
 pprint(A, width=40)
 pprint(B, width=40)
-C = strassen(A, B)
-for i, elem in enumerate(C):
-    print(f"C[{i}] = {elem}")
+# pprint(madd(A, B), width=40)
+print("===")
+Amat = Matrix(A)
+Bmat = Matrix(B)
+print(Amat)
+print(Bmat)
+# print(Amat + Bmat)
+# C = strassen(A, B)
+# for i, elem in enumerate(C):
+#     print(f"C[{i}] = {elem}")
