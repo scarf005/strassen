@@ -101,15 +101,16 @@ def strassen(A: Matrix, B: Matrix) -> Matrix:
 
     A11, A12, A21, A22 = divide(A)
     B11, B12, B21, B22 = divide(B)
-    seven_division = (
-        strassen(A11 + A22, B11 + B22),
-        strassen(A21 + A22, B11),
-        strassen(A11, B12 - B22),
-        strassen(A22, B21 - B11),
-        strassen(A11 + A12, B22),
-        strassen(A21 - A11, B11 + B12),
-        strassen(A12 - A22, B21 + B22),
+    ops = (
+        (A11 + A22, B11 + B22),
+        (A21 + A22, B11),
+        (A11, B12 - B22),
+        (A22, B21 - B11),
+        (A11 + A12, B22),
+        (A21 - A11, B11 + B12),
+        (A12 - A22, B21 + B22),
     )
+    seven_division = tuple(strassen(*op) for op in ops)
     return conquer(seven_division)
 
 
