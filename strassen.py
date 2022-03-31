@@ -25,6 +25,19 @@ class Matrix:
         longest_row_len = max([len(f"[{row},") for row in self.data])
         return pformat(self.data, width=longest_row_len)
 
+    @classmethod
+    def empty(cls, dim: int) -> Matrix:
+        return cls(create_array2d(dim))
+
+    def __getitem__(self, pos: Tuple[int, int]) -> int:
+        i, j = pos
+        return self.data[i][j]
+
+    def __setitem__(self, pos: Tuple[int, int], value: int):
+        i, j = pos
+        self.data[i][j] = value
+
+
 
 def create_array2d(dimension: int) -> Array2d:
     return [[0] * dimension for _ in range(dimension)]
@@ -123,12 +136,16 @@ print(f"{threshold =}")
 pprint(A, width=40)
 pprint(B, width=40)
 # pprint(madd(A, B), width=40)
+# pprint(msub(A, B), width=40)
+# pprint(strassen(A, B), width=40)
 print("===")
 Amat = Matrix(A)
 Bmat = Matrix(B)
 print(Amat)
 print(Bmat)
 # print(Amat + Bmat)
+# print(Amat - Bmat)
+# print(Amat @ Bmat)
 # C = strassen(A, B)
 # for i, elem in enumerate(C):
 #     print(f"C[{i}] = {elem}")
