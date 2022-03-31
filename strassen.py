@@ -6,6 +6,10 @@ from typing import List, Tuple
 Array2d = List[List[int]]
 
 
+def create_array2d(dimension: int) -> Array2d:
+    return [[0] * dimension for _ in range(dimension)]
+
+
 def strassen(A: Array2d, B: Array2d) -> Array2d:
     n = len(A)
     if n <= threshold:
@@ -25,10 +29,10 @@ def strassen(A: Array2d, B: Array2d) -> Array2d:
 def divide(A) -> Tuple[Array2d, Array2d, Array2d, Array2d]:
     n = len(A)
     m = n // 2
-    A11 = [[0] * m for _ in range(m)]
-    A12 = [[0] * m for _ in range(m)]
-    A21 = [[0] * m for _ in range(m)]
-    A22 = [[0] * m for _ in range(m)]
+    A11 = create_array2d(m)
+    A12 = create_array2d(m)
+    A21 = create_array2d(m)
+    A22 = create_array2d(m)
     for i in range(m):
         for j in range(m):
             A11[i][j] = A[i][j]
@@ -45,8 +49,8 @@ def conquer(M1, M2, M3, M4, M5, M6, M7) -> Array2d:
     C22 = madd(msub(madd(M1, M3), M2), M6)
     m = len(C11)
     n = 2 * m
-    print(2 * m, 2 * m)
-    C = [[0] * n for _ in range(n)]
+    # print(2 * m, 2 * m)
+    C = create_array2d(n)
     for i in range(m):
         for j in range(m):
             C[i][j] = C11[i][j]
@@ -58,7 +62,7 @@ def conquer(M1, M2, M3, M4, M5, M6, M7) -> Array2d:
 
 def madd(A: Array2d, B: Array2d) -> Array2d:
     n = len(A)
-    C = [[0] * n for _ in range(n)]
+    C = create_array2d(n)
     for i in range(n):
         for j in range(n):
             C[i][j] = A[i][j] + B[i][j]
@@ -67,7 +71,7 @@ def madd(A: Array2d, B: Array2d) -> Array2d:
 
 def msub(A: Array2d, B: Array2d) -> Array2d:
     n = len(A)
-    C = [[0] * n for _ in range(n)]
+    C = create_array2d(n)
     for i in range(n):
         for j in range(n):
             C[i][j] = A[i][j] - B[i][j]
@@ -76,7 +80,7 @@ def msub(A: Array2d, B: Array2d) -> Array2d:
 
 def matrixmult(A: Array2d, B: Array2d) -> Array2d:  # 1.4 Matrix Multiplication
     n = len(A)
-    C = [[0] * n for _ in range(n)]
+    C = create_array2d(n)
     for i in range(n):
         for j in range(n):
             for k in range(n):
