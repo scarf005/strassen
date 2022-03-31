@@ -37,6 +37,26 @@ class Matrix:
         i, j = pos
         self.data[i][j] = value
 
+    def __add__(self, other: Matrix) -> Matrix:
+        new = Matrix.empty(self.dim)
+        for i in range(self.dim):
+            for j in range(self.dim):
+                new[i, j] = self[i, j] + other[i, j]
+        return new
+
+    def __sub__(self, other: Matrix) -> Matrix:
+        new = Matrix.empty(self.dim)
+        for i in range(self.dim):
+            for j in range(self.dim):
+                new[i, j] = self[i, j] - other[i, j]
+        return new
+
+    def __matmul__(self, other: Matrix) -> Matrix:
+        new = Matrix.empty(self.dim)
+        for i in range(self.dim):
+            for j in range(self.dim):
+                new[i, j] = sum(self[i, k] * other[k, j] for k in range(self.dim))
+        return new
 
 
 def create_array2d(dimension: int) -> Array2d:
@@ -135,17 +155,17 @@ threshold = 2
 print(f"{threshold =}")
 pprint(A, width=40)
 pprint(B, width=40)
-# pprint(madd(A, B), width=40)
-# pprint(msub(A, B), width=40)
-# pprint(strassen(A, B), width=40)
+pprint(madd(A, B), width=40)
+pprint(msub(A, B), width=40)
+pprint(strassen(A, B), width=40)
 print("===")
 Amat = Matrix(A)
 Bmat = Matrix(B)
 print(Amat)
 print(Bmat)
-# print(Amat + Bmat)
-# print(Amat - Bmat)
-# print(Amat @ Bmat)
+print(Amat + Bmat)
+print(Amat - Bmat)
+print(Amat @ Bmat)
 # C = strassen(A, B)
 # for i, elem in enumerate(C):
 #     print(f"C[{i}] = {elem}")
