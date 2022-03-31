@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from pprint import pformat
-from typing import Callable, List, Tuple
+from typing import Any, Callable, List, Tuple, get_args
 
 # 타입 힌트
 Array2d = List[List[int]]
@@ -17,6 +17,9 @@ class Matrix:
     data: Array2d
     dim: int = field(init=False)
 
+    Point = Tuple[int, int]
+    SliceMat = Tuple[slice, slice]
+
     def __post_init__(self):
         self.dim = len(self.data)
         assert self.dim > 0
@@ -29,11 +32,28 @@ class Matrix:
     def empty(cls, dim: int) -> Matrix:
         return cls(create_array2d(dim))
 
-    def __getitem__(self, pos: Tuple[int, int]) -> int:
+    def __getitem_pos(self, pos: Point) -> int:
         i, j = pos
         return self.data[i][j]
 
-    def __setitem__(self, pos: Tuple[int, int], value: int):
+    def __getitem_slice(self, pos: SliceMat) -> Matrix:
+        slice_i, slice_j = pos
+        sliced_arr = [row[slice_j] for row in self.data[slice_i]]
+        return Matrix(sliced_arr)
+
+    @staticmethod
+    def __is_tuple_member_type_of(tup: Tuple[Any, ...], type_: Any) -> bool:
+        return all(isinstance(x, type_) for x in tup)
+
+    def __getitem__(self, pos: Point | SliceMat) -> Any:
+        if self.__is_tuple_member_type_of(pos, int):
+            return self.__getitem_pos(pos)  # type: ignore
+        elif self.__is_tuple_member_type_of(pos, slice):
+            return self.__getitem_slice(pos)  # type: ignore
+        else:
+            raise TypeError(f"{pos} is not a valid index")
+
+    def __setitem__(self, pos: Point, value: int):
         i, j = pos
         self.data[i][j] = value
 
