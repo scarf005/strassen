@@ -1,4 +1,12 @@
-def strassen(A, B):
+from __future__ import annotations
+
+from typing import List, Tuple
+
+# 타입 힌트
+Array2d = List[List[int]]
+
+
+def strassen(A: Array2d, B: Array2d) -> Array2d:
     n = len(A)
     if n <= threshold:
         return matrixmult(A, B)
@@ -14,7 +22,7 @@ def strassen(A, B):
     return conquer(M1, M2, M3, M4, M5, M6, M7)
 
 
-def divide(A):
+def divide(A) -> Tuple[Array2d, Array2d, Array2d, Array2d]:
     n = len(A)
     m = n // 2
     A11 = [[0] * m for _ in range(m)]
@@ -30,7 +38,7 @@ def divide(A):
     return A11, A12, A21, A22
 
 
-def conquer(M1, M2, M3, M4, M5, M6, M7):
+def conquer(M1, M2, M3, M4, M5, M6, M7) -> Array2d:
     C11 = madd(msub(madd(M1, M4), M5), M7)
     C12 = madd(M3, M5)
     C21 = madd(M2, M4)
@@ -48,7 +56,7 @@ def conquer(M1, M2, M3, M4, M5, M6, M7):
     return C
 
 
-def madd(A, B):
+def madd(A: Array2d, B: Array2d) -> Array2d:
     n = len(A)
     C = [[0] * n for _ in range(n)]
     for i in range(n):
@@ -57,7 +65,7 @@ def madd(A, B):
     return C
 
 
-def msub(A, B):
+def msub(A: Array2d, B: Array2d) -> Array2d:
     n = len(A)
     C = [[0] * n for _ in range(n)]
     for i in range(n):
@@ -66,7 +74,7 @@ def msub(A, B):
     return C
 
 
-def matrixmult(A, B):  # 1.4 Matrix Multiplication
+def matrixmult(A: Array2d, B: Array2d) -> Array2d:  # 1.4 Matrix Multiplication
     n = len(A)
     C = [[0] * n for _ in range(n)]
     for i in range(n):
