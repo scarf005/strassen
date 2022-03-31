@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from pprint import pprint
 from typing import List, Tuple
 
 # 타입 힌트
@@ -102,9 +103,9 @@ B = [
 ]
 
 threshold = 2
-print("threshold = ", threshold)
-print("A = ", A)
-print("B = ", B)
+print(f"{threshold =}")
+pprint(A)
+pprint(B)
 C = strassen(A, B)
-for i in range(len(C)):
-    print("C[%d] = " % (i), C[i])
+for i, elem in enumerate(C):
+    print(f"C[{i}] = {elem}")
