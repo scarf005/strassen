@@ -102,16 +102,8 @@ def strassen(A: Matrix, B: Matrix) -> Matrix:
 
 
 def divide(A: Matrix) -> Tuple[Matrix, Matrix, Matrix, Matrix]:
-    n = A.dim
-    m = n // 2
-    A11, A12, A21, A22 = [Matrix.empty(m) for _ in range(4)]
-    for i in range(m):
-        for j in range(m):
-            A11[i, j] = A[i, j]
-            A12[i, j] = A[i, j + m]
-            A21[i, j] = A[i + m, j]
-            A22[i, j] = A[i + m, j + m]
-    return A11, A12, A21, A22
+    m = A.dim // 2
+    return A[:m, :m], A[:m, m:], A[m:, :m], A[m:, m:]
 
 
 def conquer(
