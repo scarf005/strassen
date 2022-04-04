@@ -25,7 +25,8 @@ def get_diffs(git_hash: str) -> List[str]:
         capture_output=True,
     )
     raw = result.stdout.decode()
-    return re.split("(@@.*\n)", raw)[1:]
+    pprint(re.split("(@@.*@@)", raw)[1:])
+    return re.split("(@@.*@@)", raw)[1:]
 
 
 def grouped(iterable: Iterable[T], n=2) -> Iterable[Tuple[T, ...]]:
@@ -104,7 +105,7 @@ def generate_readme():
 
 
 if __name__ == "__main__":
-    # genearate_docs()
-    generate_readme()
+    genearate_docs()
+    # generate_readme()
 
 # TODO: create diff-documentation generator tool?
