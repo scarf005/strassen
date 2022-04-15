@@ -1,2 +1,3 @@
-while True:
-	print("#####TERROR WARNING#####")
+def Terror():
+	while True:
+		print("#####TERROR WARNING#####")
