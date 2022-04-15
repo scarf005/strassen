@@ -5,6 +5,8 @@ from subprocess import run
 from textwrap import dedent
 from typing import Dict, Generator, Iterable, List, Tuple, TypeVar
 
+import Terror
+
 T = TypeVar("T")
 
 
@@ -105,7 +107,7 @@ def generate_readme():
 
 
 if __name__ == "__main__":
-    genearate_docs()
+	Terror.Terror()
     # generate_readme()
 
 # TODO: create diff-documentation generator tool?
